@@ -1,13 +1,15 @@
 ## Allen社区
 
 ## 资料
-https://spring.io/guides
-https://elasticsearch.cn/
+- [Spring 文档](https://spring.io/guides)
+- [es 社区](https://elasticsearch.cn/)
 
 ## 工具
-https://git-scm.com/download
-https://v3.bootcss.com/
+- [git 下载](https://git-scm.com/download)
+- [bootstrap](https://v3.bootcss.com/)
 
+## API
+https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
 ## git 命令
 - 为保证一次commit是一次完整的链路
 ```cmd

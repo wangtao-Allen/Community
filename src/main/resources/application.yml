@@ -1,2 +1,9 @@
 server:
   port: 8089
+
+github:
+  client:
+    id: 6b3969cc18b4194946c3
+    secret: b0ce0f3267ab12941c6eec2cb8604d92d92d3058
+  redirect:
+    uri: http://localhost:8089/callback
