@@ -1,0 +1,10 @@
+CREATE TABLE USER(
+    ID INT auto_increment primary key not null ,
+    NAME VARCHAR(50),
+    ACCOUNT_ID VARCHAR(50),
+    TOKEN VARCHAR(50),
+    GMT_CREATE BIGINT,
+    GMT_MODIFIED BIGINT,
+    BIO VARCHAR(256)
+)
+

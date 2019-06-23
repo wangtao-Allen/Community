@@ -3,6 +3,7 @@
 ## 资料
 - [Spring 文档](https://spring.io/guides)
 - [es 社区](https://elasticsearch.cn/)
+- [flywaydb](https://flywaydb.org/documentation/)
 
 ## 工具
 - [git 下载](https://git-scm.com/download)
@@ -15,4 +16,8 @@ https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
 ```cmd
 追加不修改描述
 git commit --amend --no-edit
+```
+```cmd
+flyway更新表结构命令
+mvn flyway:migrate
 ```
