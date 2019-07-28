@@ -1,12 +1,13 @@
-package allen.community.model;
+package allen.community.dto;
 
+import allen.community.model.User;
 import lombok.Data;
 
 /**
- * Created by Allen on 2019/06/23
+ * Created by Allen on 2019/07/28
  */
 @Data
-public class Question {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
@@ -17,4 +18,5 @@ public class Question {
     private Integer viewCount;
     private Integer likeCount;
     private String tag;
+    private User user;
 }
