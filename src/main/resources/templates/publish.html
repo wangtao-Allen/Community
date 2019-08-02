@@ -41,7 +41,7 @@
                 </li>
 
                 <li th:if="${session.user == null}">
-                    <a href="https://github.com/login/oauth/authorize?client_id=6b3969cc18b4194946c3&redirect_uri=http://localhost:8089/callback&scope=user&state=1">登录</a>
+                    <a href="https://github.com/login/oauth/authorize?client_id=6b3969cc18b4194946c3&redirect_uri=http://192.168.19.235:8089/callback&scope=user&state=1">登录</a>
                 </li>
             </ul>
         </div>
@@ -71,8 +71,11 @@
                 <!--用户未登录提示-->
                 <div class="container-fluid main">
                     <div class="row">
-                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}"
-                             th:if="${error} != null"></div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${error}"
+                                 th:if="${error} != null">
+                            </div>
+                        </div>
                         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                             <button type="submit" class="btn btn-success btn-publish ">发布</button>
                         </div>

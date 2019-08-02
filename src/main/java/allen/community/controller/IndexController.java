@@ -3,7 +3,7 @@ package allen.community.controller;
 import allen.community.dto.QuestionDTO;
 import allen.community.mapper.UserMapper;
 import allen.community.model.User;
-import allen.community.service.QuestionService;
+import allen.community.service.impl.QuestionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ public class IndexController {
     private UserMapper userMapper;
 
     @Autowired
-    private QuestionService questionService;
+    private QuestionServiceImpl questionService;
 
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model) {

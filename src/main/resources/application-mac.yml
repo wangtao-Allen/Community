@@ -6,12 +6,12 @@ github:
     id: 6b3969cc18b4194946c3
     secret: b0ce0f3267ab12941c6eec2cb8604d92d92d3058
   redirect:
-    uri: http://192.168.19.235:8089/callback
+    uri: http://localhost:8089/callback
 
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:D:/code/Community/db/community
+    url: jdbc:h2:/Users/allen/Documents/workSpace/Community/db/community
     username: sa
     password: 123456
   h2:
@@ -21,5 +21,3 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-
-
