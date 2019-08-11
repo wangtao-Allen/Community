@@ -1,13 +1,11 @@
 package allen.community.service;
 
-import allen.community.dto.QuestionDTO;
-
-import java.util.List;
+import allen.community.dto.PaginationDTO;
 
 /**
  * Created by Allen on 2019/8/2
  */
 public interface QuestionService {
 
-    List<QuestionDTO> list();
+    PaginationDTO list(Integer page, Integer size);
 }
