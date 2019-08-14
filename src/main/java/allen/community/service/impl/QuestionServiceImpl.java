@@ -5,11 +5,14 @@ import allen.community.dto.QuestionDTO;
 import allen.community.mapper.QuestionMapper;
 import allen.community.mapper.UserMapper;
 import allen.community.model.Question;
+import allen.community.model.QuestionExample;
 import allen.community.model.User;
 import allen.community.service.QuestionService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,7 @@ public class QuestionServiceImpl implements QuestionService {
     public PaginationDTO list(Integer page, Integer size) {
 
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = questionMapper.count();
+        Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
         Integer totalPage;
 
         if (totalCount % size == 0) {
@@ -48,12 +51,12 @@ public class QuestionServiceImpl implements QuestionService {
         //size * (page - 1)
         Integer offset = size * (page - 1);
 
-        List<Question> questionList = questionMapper.list(offset, size);
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 
         for (Question question : questionList) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             //把一个对象的属性copy到另一个对象相同到属性上
             BeanUtils.copyProperties(question, questionDTO);
@@ -67,7 +70,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     public PaginationDTO list(Integer userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = questionMapper.countByUserId(userId);
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria()
+                .andCreatorEqualTo(userId);
+        Integer totalCount = (int) questionMapper.countByExample(questionExample);
 
         Integer totalPage;
 
@@ -88,12 +94,13 @@ public class QuestionServiceImpl implements QuestionService {
         //size * (page - 1)
         Integer offset = size * (page - 1);
 
-        List<Question> questionList = questionMapper.listByUserId(userId,offset, size);
+
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample,new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 
         for (Question question : questionList) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             //把一个对象的属性copy到另一个对象相同到属性上
             BeanUtils.copyProperties(question, questionDTO);
@@ -106,15 +113,22 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     public QuestionDTO getById(Integer id) {
-        Question question = questionMapper.getById(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        User user = userMapper.findById(question.getCreator());
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }
 
     public void createOrUpdate(Question question) {
-
+        if (!StringUtils.isEmpty(question.getId())) {
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.insert(question);
+        } else {
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.updateByPrimaryKeySelective(question);
+        }
     }
 }

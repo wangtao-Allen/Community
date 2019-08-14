@@ -20,4 +20,6 @@ git commit --amend --no-edit
 ```cmd
 flyway更新表结构命令
 mvn flyway:migrate
+
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 ```

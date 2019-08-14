@@ -1,6 +1,6 @@
 package allen.community.controller;
 
-import allen.community.mapper.QuestionMapper;
+import allen.community.dto.QuestionDTO;
 import allen.community.model.Question;
 import allen.community.model.User;
 import allen.community.service.impl.QuestionServiceImpl;
@@ -22,14 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 public class PublishController {
 
     @Autowired
-    private QuestionMapper questionMapper;
-    @Autowired
     private QuestionServiceImpl questionService;
 
     @GetMapping("/publish/{id}")
     public String edit(@PathVariable(name = "id") Integer id,
                        Model model) {
-        Question question = questionMapper.getById(id);
+        QuestionDTO question = questionService.getById(id);
         model.addAttribute("title", question.getTitle());
         model.addAttribute("description", question.getDescription());
         model.addAttribute("tag", question.getTag());
@@ -76,8 +74,6 @@ public class PublishController {
         question.setTag(tag);
         question.setDescription(description);
         question.setCreator(user.getId());
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
         question.setId(id);
         questionService.createOrUpdate(question);
 
