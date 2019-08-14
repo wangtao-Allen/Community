@@ -122,7 +122,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     public void createOrUpdate(Question question) {
-        if (!StringUtils.isEmpty(question.getId())) {
+        if (StringUtils.isEmpty(question.getId())) {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             questionMapper.insert(question);
