@@ -2,6 +2,8 @@ package allen.community.service.impl;
 
 import allen.community.dto.PaginationDTO;
 import allen.community.dto.QuestionDTO;
+import allen.community.exception.CustomizeErrorCode;
+import allen.community.exception.CustomizeException;
 import allen.community.mapper.QuestionMapper;
 import allen.community.mapper.UserMapper;
 import allen.community.model.Question;
@@ -51,7 +53,7 @@ public class QuestionServiceImpl implements QuestionService {
         //size * (page - 1)
         Integer offset = size * (page - 1);
 
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offset, size));
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 
@@ -95,7 +97,7 @@ public class QuestionServiceImpl implements QuestionService {
         Integer offset = size * (page - 1);
 
 
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample,new RowBounds(offset, size));
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 
@@ -114,6 +116,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if (question == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -128,7 +133,18 @@ public class QuestionServiceImpl implements QuestionService {
             questionMapper.insert(question);
         } else {
             question.setGmtModified(question.getGmtCreate());
-            questionMapper.updateByPrimaryKeySelective(question);
+            int updated = questionMapper.updateByPrimaryKeySelective(question);
+            if (updated != 1) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
+    }
+
+    public void incView(Integer id) {
+        Question question = questionMapper.selectByPrimaryKey(id);
+        Question updateQuestion = new Question();
+        updateQuestion.setId(id);
+        updateQuestion.setViewCount(question.getViewCount() + 1);
+        questionMapper.updateByPrimaryKeySelective(updateQuestion);
     }
 }
