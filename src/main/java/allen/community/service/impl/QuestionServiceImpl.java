@@ -4,6 +4,7 @@ import allen.community.dto.PaginationDTO;
 import allen.community.dto.QuestionDTO;
 import allen.community.exception.CustomizeErrorCode;
 import allen.community.exception.CustomizeException;
+import allen.community.mapper.QuestionExtMapper;
 import allen.community.mapper.QuestionMapper;
 import allen.community.mapper.UserMapper;
 import allen.community.model.Question;
@@ -53,7 +54,9 @@ public class QuestionServiceImpl implements QuestionService {
         //size * (page - 1)
         Integer offset = size * (page - 1);
 
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("id desc");
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 
@@ -96,7 +99,7 @@ public class QuestionServiceImpl implements QuestionService {
         //size * (page - 1)
         Integer offset = size * (page - 1);
 
-
+        questionExample.setOrderByClause("id desc");
         List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
@@ -130,6 +133,9 @@ public class QuestionServiceImpl implements QuestionService {
         if (StringUtils.isEmpty(question.getId())) {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setCommentCount(0);
+            question.setViewCount(0);
+            question.setLikeCount(0);
             questionMapper.insert(question);
         } else {
             question.setGmtModified(question.getGmtCreate());
@@ -140,11 +146,13 @@ public class QuestionServiceImpl implements QuestionService {
         }
     }
 
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
+
     public void incView(Integer id) {
-        Question question = questionMapper.selectByPrimaryKey(id);
-        Question updateQuestion = new Question();
-        updateQuestion.setId(id);
-        updateQuestion.setViewCount(question.getViewCount() + 1);
-        questionMapper.updateByPrimaryKeySelective(updateQuestion);
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
