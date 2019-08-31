@@ -2,7 +2,7 @@ package allen.community.controller;
 
 import allen.community.dto.PaginationDTO;
 import allen.community.model.User;
-import allen.community.service.impl.QuestionServiceImpl;
+import allen.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ProfileController {
 
     @Autowired
-    private QuestionServiceImpl questionService;
+    private QuestionService questionService;
 
     @GetMapping("/profile/{action}")
     private String profile(@PathVariable(name = "action") String action,
