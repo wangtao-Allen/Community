@@ -18,6 +18,10 @@ body {
     height: 40px;
 }
 
+.media-body {
+    padding-top: 10px;
+}
+
 .text-desc {
     font-size: 12px;
     font-weight: normal;
@@ -28,11 +32,20 @@ body {
     margin-top: 15px;
 }
 
-.community-menu{
+.community-menu {
     font-size: 13px;
     color: #999;
 }
 
-.jumbotron{
+.jumbotron {
     margin: 50px;
+}
+
+.comment {
+    margin: 10px 0;
+}
+
+.btn-comment {
+    float: right;
+    margin-bottom: 10px;
 }
