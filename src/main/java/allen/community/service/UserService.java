@@ -23,7 +23,7 @@ public class UserService {
         userExample.createCriteria()
                 .andAccountIdEqualTo(user.getAccountId());
         List<User> userList = userMapper.selectByExample(userExample);
-        if (userList.size() != 0) {
+        if (userList.size() == 0) {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);

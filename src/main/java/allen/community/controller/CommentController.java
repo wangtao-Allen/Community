@@ -1,11 +1,12 @@
 package allen.community.controller;
 
-import allen.community.dto.CommentDTO;
+import allen.community.dto.CommentCreateDTO;
 import allen.community.dto.ResultDTO;
 import allen.community.exception.CustomizeErrorCode;
 import allen.community.model.Comment;
 import allen.community.model.User;
 import allen.community.service.CommentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,14 +27,17 @@ public class CommentController {
 
     @ResponseBody
     @PostMapping("/comment")
-    public Object post(@RequestBody CommentDTO commentDTO,
+    public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return ResultDTO.errorOf(CustomizeErrorCode.NOT_LOGIN);
         }
+        if (commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())) {
+            return ResultDTO.errorOf(CustomizeErrorCode.CONTENT_IS_EMPTY);
+        }
         Comment comment = new Comment();
-        BeanUtils.copyProperties(commentDTO,comment);
+        BeanUtils.copyProperties(commentCreateDTO, comment);
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(comment.getGmtCreate());
         comment.setCommentator(user.getId());

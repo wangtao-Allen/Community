@@ -49,3 +49,44 @@ body {
     float: right;
     margin-bottom: 10px;
 }
+
+.comments {
+    padding-bottom: 5px;
+    margin-top: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-style {
+    padding-bottom: 5px;
+    margin-top: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-content-style{
+    padding-bottom: 15px;
+    margin-top: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-section{
+    margin-top: 15px;
+}
+
+.comment-sp {
+    margin-top: 0px;
+}
+
+.menu {
+    color: #999;
+    margin-top: 8px;
+}
+
+.menu .icon {
+    margin-right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu .icon:hover {
+    color: #499ef3;
+}
