@@ -56,19 +56,34 @@ body {
     border-bottom: 1px solid #eee;
 }
 
+.sub-comments {
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+}
+
+.sub-comments .form-control {
+    margin-top: 15px;
+}
+
+.sub-comments .btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .comment-style {
     padding-bottom: 5px;
     margin-top: 10px;
     border-bottom: 1px solid #eee;
 }
 
-.comment-content-style{
+.comment-content-style {
     padding-bottom: 15px;
     margin-top: 20px;
     border-bottom: 1px solid #eee;
 }
 
-.comment-section{
+.comment-section {
     margin-top: 15px;
 }
 
@@ -85,6 +100,10 @@ body {
     margin-right: 10px;
     font-size: 15px;
     cursor: pointer;
+}
+
+.menu .active {
+    color: #499ef3;
 }
 
 .menu .icon:hover {

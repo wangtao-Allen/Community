@@ -2,6 +2,7 @@ package allen.community.controller;
 
 import allen.community.dto.CommentDTO;
 import allen.community.dto.QuestionDTO;
+import allen.community.enums.CommentTypeEnum;
 import allen.community.service.CommentService;
 import allen.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class QuestionController {
     public String question(@PathVariable(name = "id") Long id, Model model){
         QuestionDTO questionDTO = questionService.getById(id);
 
-        List<CommentDTO> commentDTOList = commentService.listByQuestionId(id);
+        List<CommentDTO> commentDTOList = commentService.listByQuestionId(id, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question",questionDTO);

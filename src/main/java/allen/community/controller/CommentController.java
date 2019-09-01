@@ -1,7 +1,9 @@
 package allen.community.controller;
 
 import allen.community.dto.CommentCreateDTO;
+import allen.community.dto.CommentDTO;
 import allen.community.dto.ResultDTO;
+import allen.community.enums.CommentTypeEnum;
 import allen.community.exception.CustomizeErrorCode;
 import allen.community.model.Comment;
 import allen.community.model.User;
@@ -10,11 +12,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by Allen on 2019/08/17
@@ -44,5 +45,12 @@ public class CommentController {
         comment.setLikeCount(0);
         commentService.insert(comment);
         return ResultDTO.successOf();
+    }
+
+    @ResponseBody
+    @GetMapping("/comment/{id}")
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id") Long id) {
+        List<CommentDTO> commentDTOList = commentService.listByQuestionId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.successOf(commentDTOList);
     }
 }
