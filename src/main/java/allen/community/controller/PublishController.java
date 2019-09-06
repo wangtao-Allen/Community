@@ -71,10 +71,16 @@ public class PublishController {
         }
         Question question = new Question();
         question.setTitle(title);
-        question.setTag(tag);
         question.setDescription(description);
         question.setCreator(user.getId());
         question.setId(id);
+        if (tag.contains("，")) {
+            question.setTag(tag.trim().replace("，", ","));
+        } else if (!tag.contains(",")) {
+            question.setTag(tag + ",");
+        } else {
+            question.setTag(tag);
+        }
         questionService.createOrUpdate(question);
 
         return "redirect:/";
