@@ -8,6 +8,7 @@
 ## 工具
 - [git 下载](https://git-scm.com/download)
 - [bootstrap](https://v3.bootcss.com/)
+- [markdown editor](https://pandao.github.io/editor.md/)
 
 ## API
 https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/

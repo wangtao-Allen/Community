@@ -30,9 +30,9 @@ public class UserService {
         } else {
             User dbUser = userList.get(0);
             dbUser.setGmtModified(System.currentTimeMillis());
-            dbUser.setAvatarUrl(dbUser.getAvatarUrl());
-            dbUser.setName(dbUser.getName());
-            dbUser.setToken(dbUser.getToken());
+            dbUser.setAvatarUrl(user.getAvatarUrl());
+            dbUser.setName(user.getName());
+            dbUser.setToken(user.getToken());
             userMapper.updateByPrimaryKeySelective(dbUser);
         }
     }

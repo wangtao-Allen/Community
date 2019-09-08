@@ -3384,7 +3384,7 @@ org.h2.message.DbException: General error: "java.lang.IllegalStateException: The
 	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:384)
 	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:312)
 	at org.apache.catalina.core.StandardHostValve.custom(StandardHostValve.java:394)
-	at org.apache.catalina.core.StandardHostValve.status(StandardHostValve.java:253)
+	at org.apache.catalina.core.StandardHostValve.type(StandardHostValve.java:253)
 	at org.apache.catalina.core.StandardHostValve.throwable(StandardHostValve.java:348)
 	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:173)
 	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
