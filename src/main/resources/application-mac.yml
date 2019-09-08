@@ -8,6 +8,15 @@ github:
   redirect:
     uri: http://localhost:8089/callback
 
+ucloud:
+  ufile:
+    public-key: TOKEN_15eb8367-8fd3-4653-b769-1959cb22814a
+    private-key: 5eef574c-e734-488e-9f24-40be55f262a5
+    bucket-name: liaoliao
+    region: cn-bj
+    suffix: ufileos.com
+    expires: 315360000
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
