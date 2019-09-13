@@ -1,5 +1,18 @@
 ## Allen社区
 
+## 部署
+### 依赖
+- git-拉取代码
+- jdk-项目依赖
+- maven-编译代码
+- mysql-数据库
+### 步骤
+- yum update
+- yum install git
+- mkdir App
+- mvn clean compile package-编译打包
+- java -jar -Dspring.profiles.active=production target/community-0.0.1-SNAPSHOT.jar-启动项目
+
 ## 资料
 - [Spring 文档](https://spring.io/guides)
 - [es 社区](https://elasticsearch.cn/)

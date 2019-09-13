@@ -6,6 +6,7 @@ import allen.community.mapper.UserMapper;
 import allen.community.model.User;
 import allen.community.provider.GithubProvider;
 import allen.community.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import java.util.UUID;
  * Created by Allen on 2019/6/12
  */
 @Controller
+@Slf4j
 public class AuthorizeController {
 
     @Autowired
@@ -65,15 +67,16 @@ public class AuthorizeController {
             return "redirect:/";
         } else {
             //登录失败，重新登录
+            log.error("callback get github error,{}", githubUser);
             return "redirect:/";
         }
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
-                         HttpServletResponse response){
+                         HttpServletResponse response) {
         request.getSession().removeAttribute("user");
-        Cookie cookie = new Cookie("token",null);
+        Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         return "redirect:/";
