@@ -137,3 +137,9 @@ body {
     white-space: normal;
     display: inline-block;
 }
+
+.footer{
+    padding: 10px 20%;
+    color: #666;
+    text-align: center;
+}
