@@ -29,3 +29,13 @@ mybatis:
     map-underscore-to-camel-case: true
   type-aliases-package: allen.community.mapper
   mapper-locations: classpath:mapper/*.xml
+
+logging:
+  # log文件存放地址 项目根目录下
+  file: logs/community.log
+  level:
+    root: info
+    allen:
+      community:
+        mapper: debug
+
