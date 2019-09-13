@@ -2,6 +2,7 @@ package allen.community.service;
 
 import allen.community.dto.PaginationDTO;
 import allen.community.dto.QuestionDTO;
+import allen.community.dto.QuestionQueryDTO;
 import allen.community.exception.CustomizeErrorCode;
 import allen.community.exception.CustomizeException;
 import allen.community.mapper.QuestionExtMapper;
@@ -10,11 +11,11 @@ import allen.community.mapper.UserMapper;
 import allen.community.model.Question;
 import allen.community.model.QuestionExample;
 import allen.community.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,10 +34,15 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
-
+    public PaginationDTO list(String search, Integer page, Integer size) {
+        if (StringUtils.isNotBlank(search)) {
+            String[] searchs = StringUtils.split(search, " ");
+            search = Arrays.stream(searchs).collect(Collectors.joining("|"));
+        }
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         Integer totalPage;
 
         if (totalCount % size == 0) {
@@ -52,12 +58,11 @@ public class QuestionService {
             page = totalPage;
         paginationDTO.setPagination(totalPage, page);
 
-        //size * (page - 1)
         Integer offset = size * (page - 1);
 
-        QuestionExample example = new QuestionExample();
-        example.setOrderByClause("id desc");
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
+        questionQueryDTO.setPage(offset);
+        questionQueryDTO.setSize(size);
+        List<Question> questionList = questionExtMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 
@@ -131,7 +136,7 @@ public class QuestionService {
     }
 
     public void createOrUpdate(Question question) {
-        if (StringUtils.isEmpty(question.getId())) {
+        if (question.getId() == null) {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             question.setCommentCount(0);
@@ -163,7 +168,7 @@ public class QuestionService {
         }
         String[] tags = StringUtils.split(queryDTO.getTag(), ",");
         String regexpTag;
-        if (!StringUtils.isEmpty(tags)) {
+        if (StringUtils.isNotBlank(tags.toString())) {
             regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
         } else {
             tags = new String[]{queryDTO.getTag()};
